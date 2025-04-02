@@ -1,11 +1,11 @@
 "use client";
 
-import IndexRequestForm from "@/components/forms/IndexRequestForm";
+import IndexRequestForm from "@/components/forms/IndexSettingsForm";
 import StoreDatabaseForm from "@/components/forms/StoreDatabaseForm";
 import LandingPage from "@/components/landing/Landing";
-import { User, useUserContext } from "@/components/SessionProvder";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { User, useUserContext } from "@/components/UserContext";
 import { montserrat } from "@/fonts/fonts";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -90,8 +90,11 @@ export default function HomePage() {
       if (user.databases && user.databases.length > 0) {
         setCompletedSteps([0]);
       }
-      if (user.indexRequests && user.indexRequests.length > 0) {
+      if (user.indexSettings && user.indexSettings.length > 0) {
         setCompletedSteps([0, 1]);
+        if (user.indexSettings[0].status === "IN_PROGRESS") {
+          setCompletedSteps([0, 1, 2]);
+        }
       }
     }
   }, [user]);
@@ -109,7 +112,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (storeUser && storeUser.databases.length > 0 && storeUser.indexRequests.length > 0) {
+    if (storeUser && storeUser.databases.length > 0 && storeUser.indexSettings.length > 0) {
       setDatabaseId(storeUser.databases[0].id);
     }
   }, [storeUser]);
@@ -129,9 +132,7 @@ export default function HomePage() {
         body: JSON.stringify({ databaseId }),
       });
 
-      const { success } = await response.json();
-
-      if (!success) {
+      if (!response.ok) {
         return toast.error("Failed to start indexing.");
       }
 

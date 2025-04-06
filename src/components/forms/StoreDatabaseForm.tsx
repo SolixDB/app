@@ -42,19 +42,20 @@ export default function StoreDatabaseForm({ setShowStoreDatabaseForm, setComplet
       });
 
       if (response.ok) {
-        toast.success("Database connection saved!");
-        const { dbEntry } = await response.json();
+        const { database } = await response.json();
+        console.log(database);
 
         setUser((prevUser) => {
           if (prevUser) {
             return {
               ...prevUser,
-              databases: [...prevUser.databases, dbEntry],
+              databases: [...prevUser.databases, database],
             };
           }
           return prevUser;
         });
 
+        toast.success("Database connection saved!");
         setCompletedSteps((prev) => [...prev, 0]);
       } else {
         const errorData = await response.json();
@@ -104,7 +105,7 @@ export default function StoreDatabaseForm({ setShowStoreDatabaseForm, setComplet
           <Label htmlFor="dbName">Database Name</Label>
           <Input id="dbName" placeholder="e.g., my_database" {...form.register("dbName")} />
         </div>
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button type="submit" className="w-full cursor-pointer" disabled={isSubmitting}>
           {isSubmitting ? "Saving..." : "Save Connection"}
         </Button>
       </form>

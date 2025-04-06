@@ -8,16 +8,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { montserrat } from "@/fonts/fonts";
 import { indexRequestSchema } from "@/schema/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IndexParams, IndexType } from "@prisma/client";
+import { Cluster, IndexParams, IndexType } from "@prisma/client";
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { User } from "../UserContext";
+import { TRANSFER } from "@/types/params";
 
 const solanaIndexCategories = [
-  { id: "TRANSFER" as IndexParams, name: "Transfer" },
+  { id: TRANSFER as IndexParams, name: "Transfer" },
   { id: "DEPOSIT" as IndexParams, name: "Deposit" },
   { id: "WITHDRAW" as IndexParams, name: "Withdraw" },
   { id: "NFT_SALE" as IndexParams, name: "NFT Sale" },
@@ -35,6 +36,11 @@ const indexTypes = [
   { id: "PROGRAM_LOGS" as IndexType, name: "Program Logs" },
   { id: "NFTS" as IndexType, name: "NFTs" },
 ];
+
+const cluster = [
+  { id: "DEVNET" as Cluster, name: "Devnet" },
+  { id: "MAINNET" as Cluster, name: "Mainnet" },
+]
 
 type IndexRequestValues = z.infer<typeof indexRequestSchema>;
 
@@ -138,6 +144,20 @@ export default function IndexRequestForm({ setShowIndexRequestForm, setCompleted
         </div>
 
         <div className="flex flex-col gap-2">
+          <Label>Cluster</Label>
+          <Select onValueChange={(value) => setValue("cluster", value as Cluster)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Choose a cluster" />
+            </SelectTrigger>
+            <SelectContent>
+              {cluster.map((type) => (
+                <SelectItem key={type.id} value={type.id}>{type.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
           <Label>Target Address</Label>
           <Input {...register("targetAddr")} placeholder="Enter target address" className="w-full" />
         </div>

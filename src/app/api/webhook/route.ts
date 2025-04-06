@@ -1,27 +1,29 @@
-import pushToQueue from "@/lib/pushToQueue";
+import { formatData } from "@/lib/formatData";
+import { pushToQueue } from "@/lib/pushToQueue";
 import { NextRequest, NextResponse } from "next/server";
+
+const WEBHOOK_DEVNET_SECRET = process.env.WEBHOOK_DEVNET_SECRET;
+const WEBHOOK_MAINNET_SECRET = process.env.WEBHOOK_MAINNET_SECRET;
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const receivedSecret = request.headers.get("authorization");
-    const storedSecret = process.env.WEBHOOK_SECRET;
 
-    if (!receivedSecret || receivedSecret !== storedSecret) {
+    const receivedSecret = request.headers.get("authorization");
+
+    if (!receivedSecret || (receivedSecret !== WEBHOOK_DEVNET_SECRET && receivedSecret !== WEBHOOK_MAINNET_SECRET)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { accountAddress, transactionType, data } = body;
-    if (!accountAddress || !transactionType || !data) {
-      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    const data = body[0];
+    if (!data) {
+      return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
 
-    // Push the data to Redis
-    const queueData = {
-      accountAddress,
-      transactionType,
-      data,
-    };
+    const queueData = formatData(data);
+    if (!queueData) {
+      return NextResponse.json({ error: "Failed to format data" }, { status: 400 });
+    }
 
     await pushToQueue(queueData);
 

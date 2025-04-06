@@ -1,19 +1,38 @@
-import { redis } from "@/db/redis";
-import { Database, IndexParams, IndexType, User } from "@prisma/client";
+import { Cluster, Database, IndexParams, IndexType, Plan } from "@prisma/client";
+import { redis } from "../db/redis";
+import { Queue } from "bullmq";
+
+const REDIS_FEEDING_QUEUE = process.env.REDIS_FEEDING_QUEUE || 'feedingQueue';
+
+export const feedingQueue = new Queue(REDIS_FEEDING_QUEUE, {
+  connection: redis,
+});
 
 export interface CachedSettings {
   databaseId: string;
   targetAddr: string;
   indexType: IndexType;
   indexParams: IndexParams[];
+  cluster: Cluster;
+  userId: string;
+}
+
+export interface CachedUser {
+  id: string;
+  email: string;
+  credits: number;
+  plan: Plan;
+  createdAt: Date;
+  databases: Database[];
 }
 
 export async function cacheData(
-  user: User,
+  user: CachedUser,
   database: Database,
   targetAddr: string,
   indexType: IndexType,
-  indexParams: IndexParams[]
+  indexParams: IndexParams[],
+  cluster: Cluster,
 ) {
   const userKey = `user:${database.id}`;
   const dbKey = `database:${database.id}`;
@@ -34,9 +53,19 @@ export async function cacheData(
   // Check if settings are already cached
   const settingsExists = await redis.exists(settingsKey);
   if (!settingsExists) {
-    const settings: CachedSettings = { databaseId: database.id, targetAddr, indexType, indexParams };
+    const settings: CachedSettings = { databaseId: database.id, targetAddr, indexType, indexParams, cluster, userId: user.id };
     await redis.set(settingsKey, JSON.stringify(settings));
   }
+}
+
+export async function pushDataToRedis(
+  database: Database,
+  transactions: any
+) {
+  await feedingQueue.add("feed", {
+    databaseId: database.id,
+    transactions,
+  });
 }
 
 export async function getCachedData() {
@@ -54,7 +83,7 @@ export async function getCachedData() {
   // Parse only non-null values
   const databases: Database[] = dbValues.filter(Boolean).map((db) => JSON.parse(db as string));
   const settings: CachedSettings[] = settingsValues.filter(Boolean).map((s) => JSON.parse(s as string));
-  const users: User[] = userValues.filter(Boolean).map((u) => JSON.parse(u as string));
+  const users: CachedUser[] = userValues.filter(Boolean).map((u) => JSON.parse(u as string));
 
   return { databases, settings, users };
 }

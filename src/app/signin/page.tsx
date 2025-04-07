@@ -10,7 +10,6 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export default function SignInPage() {
   const { resolvedTheme } = useTheme();
@@ -126,19 +125,19 @@ export default function SignInPage() {
                 whileTap={{ scale: 0.97 }}
               >
                 <Button
-                  onClick={() => toast.info("Coming soon!")}
+                  onClick={() => signIn("discord", { callbackUrl: "/" })}
                   className="w-full border flex items-center justify-center gap-3 h-14 text-base cursor-pointer"
                   variant="outline"
                   disabled={isLoading}
                 >
                   <Image
-                    src="/microsoft.png"
-                    alt="Microsoft Logo"
+                    src="/discord.png"
+                    alt="Discord Logo"
                     width={24}
                     height={24}
                     className="h-6 w-6"
                   />
-                  <span className="ml-2 font-medium">Continue with Microsoft</span>
+                  <span className="ml-2 font-medium">Continue with Discord</span>
                 </Button>
               </motion.div>
             </CardContent>

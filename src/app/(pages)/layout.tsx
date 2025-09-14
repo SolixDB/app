@@ -1,5 +1,5 @@
+import Appbar from "@/components/Appbar";
 import Footer from "@/components/landing/Footer";
-import Navbar from "@/components/landing/Navbar";
 import { UserProvider } from "@/components/UserContext";
 import prisma from "@/db/prisma";
 import { auth } from "@/lib/auth";
@@ -70,9 +70,8 @@ export default async function PagesLayout({ children }: PagesLayoutProps) {
   return (
     <UserProvider user={user} userData={userData}>
       <main>
-        <Navbar session={session} />
+        <Appbar session={session} />
         {children}
-        <Footer />
       </main>
     </UserProvider>
   );

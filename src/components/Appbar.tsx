@@ -7,7 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
 
 export default function Appbar({ session }: { session: Session | null }) {
@@ -56,7 +55,7 @@ export default function Appbar({ session }: { session: Session | null }) {
               Sign in
             </Button>
           )}
-          <ThemeToggle position="relative" />
+          {/* <ThemeToggle position="relative" /> */}
         </div>
       </div>
     </motion.nav>

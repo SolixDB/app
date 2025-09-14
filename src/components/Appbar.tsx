@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
 
 export default function Appbar({ session }: { session: Session | null }) {
@@ -21,7 +22,7 @@ export default function Appbar({ session }: { session: Session | null }) {
 
   return (
     <motion.nav
-      className="sticky z-10 top-0 h-16 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      className="sticky z-10 top-0 h-16 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border border-b-[1px] box-border"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
@@ -55,7 +56,7 @@ export default function Appbar({ session }: { session: Session | null }) {
               Sign in
             </Button>
           )}
-          {/* <ThemeToggle position="relative" /> */}
+          <ThemeToggle position="relative" />
         </div>
       </div>
     </motion.nav>

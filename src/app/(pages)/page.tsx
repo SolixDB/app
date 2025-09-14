@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { syne } from "@/fonts/fonts";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HeroPage() {
@@ -14,15 +15,14 @@ export default function HeroPage() {
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
       }}
-      className="relative"
+      className="relative w-full max-w-7xl flex flex-col mx-auto py-32"
     >
       <motion.section
         transition={{ duration: 0.8 }}
-        className="relative flex flex-col items-center py-32 bg-gradient-to-br from-primary/20 to-transparent"
+        className="flex flex-col-reverse md:flex-row items-center md:justify-between gap-10"
       >
-        <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-background to-transparent pointer-events-none" />
-
-        <div className="max-w-7xl flex flex-col w-full">
+        {/* Text Section */}
+        <div className="flex-1 flex flex-col">
           <motion.h1
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.7 }}
@@ -36,7 +36,7 @@ export default function HeroPage() {
           <motion.p
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 max-w-2xl text-lg text-muted-foreground"
+            className="mt-6 max-w-xl text-lg text-muted-foreground"
           >
             Skip the indexers. Stream and store blockchain data straight into your
             database — fast, reliable, and ready to query.
@@ -50,27 +50,39 @@ export default function HeroPage() {
             <Button size="lg" className="rounded-full">
               Start for free
             </Button>
-            <Link href={"/docs"} className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all px-4 hover:text-primary">
+            <Link
+              href={"/docs"}
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all px-4 hover:text-primary"
+            >
               Documentation
             </Link>
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-      </motion.section>
+        {/* Hero Image Section */}
+        <div className="flex-1 flex justify-center items-center relative">
+          {[0, 0.7, 1.4].map((delay, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-44 h-44 border border-primary rounded-full bg-primary/10"
+              initial={{ scale: 1, opacity: 0 }}
+              animate={{ scale: [1, 2.5], opacity: [0, 0.8, 0] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay,
+              }}
+            />
+          ))}
 
-      <motion.section
-        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-        transition={{ duration: 0.8 }}
-        className="relative py-32 bg-background"
-      >
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
-            Next Section Content
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            This section flows seamlessly after the hero with a smooth fade.
-          </p>
+          <Image
+            src="/hero.png"
+            alt="SolixDB"
+            width={200}
+            height={200}
+            className="w-40 h-40 relative z-10"
+          />
         </div>
       </motion.section>
     </motion.div>

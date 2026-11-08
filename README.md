@@ -32,11 +32,12 @@ src/
   app/            routes, layout, robots, sitemap, manifest, llms.txt
   components/     Navigation, HeroSection, HeroCta, Footer
   config/
-    site.ts       name, URL, description, keywords, links (single source)
+    site.ts       name, URL, description, keywords, links, theme color
     seo.ts        page metadata, JSON-LD and llms.txt built from site.ts
 ```
 
-To change copy or links that crawlers and AI assistants see, edit `src/config/site.ts`.
+- Copy and links that crawlers and AI assistants see: `src/config/site.ts`
+- Colors: `--color-ink` (background) and `--color-brand` (blue) in `src/app/globals.css`. If you change the background, also update `themeColor` in `site.ts`.
 
 ## License
 

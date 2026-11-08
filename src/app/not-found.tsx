@@ -1,56 +1,18 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { syne } from "@/fonts/fonts";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { ThemeToggle } from "@/components/ThemeToggle";
-
-const containerVariants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0 },
-};
+import Link from "next/link";
 
 export default function NotFound() {
-  const router = useRouter();
-
-  useEffect(() => {
-    document.title = "Page Not Found - SolixDB"; // Set a descriptive title
-  }, []);
-
   return (
-    <motion.div
-      className={cn(
-        "min-h-[calc(100vh_-_60px)] bg-background py-16 px-6 sm:px-8 lg:px-12 flex flex-col items-center justify-center text-center",
-        syne
-      )}
-      variants={containerVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-    >
-      <ThemeToggle position="absolute" />
-      <motion.div
-        className="max-w-md"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.2 } }}
+    <main className="flex min-h-svh flex-col items-center justify-center gap-8 px-6 text-center">
+      <h1 className="text-[52px] font-medium leading-[0.85] tracking-[-0.06em] sm:text-[96px]">
+        Page not found
+      </h1>
+      <Link
+        href="/"
+        className="hero-cta inline-flex items-center gap-[0.55em] text-xl font-semibold tracking-[-0.05em]"
       >
-        <h1 className={cn("text-4xl font-bold text-primary tracking-tight mb-4", syne)}>
-          404 - Page Not Found
-        </h1>
-        <p className="text-lg text-muted-foreground mb-6">
-          The page you are looking for does not exist.
-        </p>
-        <Button onClick={() => router.back()} className="mr-2 cursor-pointer text-lg py-6">
-          Go Back
-        </Button>
-        <Button onClick={() => router.push("/")} variant="outline" className="cursor-pointer text-lg py-6">
-          Go to Homepage
-        </Button>
-      </motion.div>
-    </motion.div>
+        <span aria-hidden className="hero-cta-arrow h-[1.1em] w-[1.1em] bg-current" />
+        <span className="hero-cta-label">Back home</span>
+      </Link>
+    </main>
   );
 }

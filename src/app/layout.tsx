@@ -1,33 +1,22 @@
-import Providers from "@/components/Providers";
-import { Toaster } from "@/components/ui/sonner";
-import { siteConfig } from "@/config/siteConfig";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { jsonLd, metadata as seoMetadata } from "@/config/seo";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
+export const metadata = seoMetadata;
 
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
-export const metadata = siteConfig;
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} antialiased`}
-      >
+    <html lang="en" style={{ colorScheme: "dark" }}>
+      <body className={`${poppins.className} bg-ink text-white antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
         <Analytics />
-        <Providers>
-          {children}
-          <Toaster />
-        </Providers>
       </body>
     </html>
   );

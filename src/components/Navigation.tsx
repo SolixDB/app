@@ -1,45 +1,57 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, Github } from "lucide-react";
+import Link from "next/link";
+import { site } from "@/config/site";
 
 export function Navigation() {
-  return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 sm:h-20 items-center justify-between">
-          <Link href="/" className="flex items-center group">
-            <Image
-              src="https://ox35safakaidjuzg.public.blob.vercel-storage.com/hero.webp"
-              alt="SolixDB"
-              width={120}
-              height={32}
-              className="h-6 sm:h-8 w-auto transition-transform group-hover:scale-105"
-              priority
-            />
-          </Link>
+  const [scrolled, setScrolled] = useState(false);
 
-          <div className="flex items-center gap-2 sm:gap-4">
-            <Link
-              href="https://github.com/solixdb"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="flex items-center gap-2 text-sm font-bold py-2 px-2 sm:px-3 rounded-sm text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
-            >
-              <Github size={18} />
-              <span className="hidden sm:inline">Open Source</span>
-            </Link>
-            <Link
-              href={'https://t.me/priyansh_ptl18'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-bold bg-neutral-100 py-2 px-4 rounded-sm text-neutral-500 hover:text-neutral-700 transition-colors"
-            >
-              Enterprise <ArrowRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </nav>
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 w-full border-b bg-ink font-semibold leading-none tracking-[-0.05em] transition-colors duration-300 ${
+        scrolled ? "border-white/[0.07]" : "border-transparent"
+      }`}
+    >
+      <nav
+        aria-label="Global"
+        className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-8"
+      >
+        <Link
+          href="/"
+          title={`${site.name} homepage`}
+          className="shrink-0 transition-opacity hover:opacity-70"
+        >
+          <Image
+            src="/logo.png"
+            alt={site.name}
+            width={104}
+            height={28}
+            priority
+            className="h-7 w-auto"
+          />
+        </Link>
+
+        <Link
+          href={site.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hero-cta inline-flex items-center gap-[0.55em] text-[18px]"
+        >
+          <span aria-hidden className="hero-cta-arrow h-[1.1em] w-[1.1em] bg-current" />
+          <span className="hero-cta-label">
+            <span className="hidden sm:inline">View on </span>GitHub
+          </span>
+        </Link>
+      </nav>
+    </header>
   );
 }

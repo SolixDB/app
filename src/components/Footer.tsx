@@ -3,24 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const links = {
-  product: [
-    { label: "Features", href: "#benchmark" },
-    { label: "Use Cases", href: "#use-cases" },
-    { label: "API", href: "https://dashboard.solixdb.xyz" },
-  ],
-  resources: [
-    { label: "Documentation", href: "http://docs.solixdb.xyz", external: true },
-    { label: "API Reference", href: "https://api.solixdb.xyz", external: true },
-  ],
-  community: [
-    { label: "X", href: "https://x.com/solixdb", external: true },
-    { label: "Discord", href: "https://discord.gg/DRX4aMYK", external: true },
-    { label: "Telegram", href: "https://t.me/solixdb", external: true },
-    { label: "GitHub", href: "https://github.com/solixdb", external: true },
-  ],
-};
-
 const socialLinks = [
   {
     label: "X",
@@ -49,23 +31,14 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    label: "Telegram",
-    href: "https://t.me/solixdb",
-    icon: (
-      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-      </svg>
-    ),
-  },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#E5E1D8]">
+    <footer>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-8 grid grid-cols-2 md:grid-cols-5 gap-8">
-          <div className="col-span-2">
+        <div className="py-8 flex flex-col sm:flex-row sm:items-start justify-between gap-8">
+          <div>
             <Link href="/" className="inline-block mb-4">
               <Image
                 src="/logo.png"
@@ -81,44 +54,6 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-xs ml-2 font-semibold text-[#1A1C1E]/40 uppercase tracking-wider mb-4">
-              Product
-            </h4>
-            <ul className="space-y-2.5">
-              {links.product.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm font-semibold hover:bg-neutral-100 py-0.5 px-2 rounded-sm text-neutral-500 hover:text-neutral-700 transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-xs ml-2 font-semibold text-[#1A1C1E]/40 uppercase tracking-wider mb-4">
-              Resources
-            </h4>
-            <ul className="space-y-2.5">
-              {links.resources.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-semibold hover:bg-neutral-100 py-0.5 px-2 rounded-sm text-neutral-500 hover:text-neutral-700 transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="col-span-2 md:col-span-1">
             <h4 className="text-xs font-semibold text-[#1A1C1E]/40 uppercase tracking-wider mb-4">
               Community
             </h4>

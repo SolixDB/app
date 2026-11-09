@@ -15,14 +15,12 @@ export const metadata: Metadata = {
     title: site.title,
     description: site.description,
     url: "/",
-    images: [site.ogImage],
   },
   twitter: {
     card: "summary_large_image",
     site: "@solixdb",
     title: site.title,
     description: site.description,
-    images: [site.ogImage],
   },
 };
 

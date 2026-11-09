@@ -15,7 +15,6 @@ export const site = {
     "Soroban events",
     "Rust indexer",
   ],
-  ogImage: "/open-graph.png",
   themeColor: "#030408",
   links: {
     github: "https://github.com/solixdb",

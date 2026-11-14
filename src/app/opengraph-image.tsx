@@ -11,7 +11,7 @@ export const contentType = "image/png";
 const INK = "#030408";
 const BRAND = "#1665ff";
 const HEADLINE = ["Skip the Indexer.", "Ship the App."];
-const TAGLINE = "The open-source Rust data layer for Solana and Stellar.";
+const TAGLINE = "The open-source Rust data layer for blockchains, now on Stellar.";
 const CTA = "solixdb.com";
 const BAND = { width: size.width, height: 132 };
 

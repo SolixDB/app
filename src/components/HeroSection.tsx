@@ -10,8 +10,8 @@ export function HeroSection() {
           Ship the App.
         </h1>
         <p className="mt-10 max-w-2xl text-lg font-medium leading-tight tracking-[-0.03em] sm:text-2xl">
-          The open-source Rust data layer for Solana and Stellar. Full history through standard RPC,
-          plus live streams.
+          The open-source Rust data layer for blockchains, now on Stellar. Full history from genesis
+          through standard RPC, plus live streams.
         </p>
         <div className="relative mt-10 h-20">
           <HeroCta />

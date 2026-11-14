@@ -62,7 +62,7 @@ export function Footer() {
               />
             </Link>
             <p className="mt-5 max-w-[220px] text-base font-medium leading-relaxed tracking-[-0.03em] text-white/45">
-              The open-source data layer for Solana and Stellar.
+              The open-source data layer for blockchains, now on Stellar.
             </p>
           </div>
 

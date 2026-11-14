@@ -1,7 +1,7 @@
 export const site = {
   name: "SolixDB",
   url: "https://solixdb.com",
-  title: "SolixDB - The open data layer for blockchains, now on Stellar",
+  title: "SolixDB - The open data layer",
   description:
     "Open-source Rust data layer for blockchains, now on Stellar. Full history from genesis through standard RPC, plus live streams.",
   keywords: [

@@ -1,6 +1,6 @@
 # SolixDB Website
 
-Landing page for [SolixDB](https://solixdb.com), the open-source Rust data layer for blockchains, now on Stellar.
+Landing page for [SolixDB](https://solixdb.com), the open data layer for blockchains, now on Stellar.
 
 ## Stack
 
